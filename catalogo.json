@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "nombre": "margarita",
+        "categoria": "PIZZAS",
+        "precio": 180.00,
+        "stock": 10,
+        "imagen": "img/pizzamargarita.jpg"
+    },
+    {
+        "id": 2,
+        "nombre": "peperoni",
+        "categoria": "PIZZAS",
+        "precio": 195.00,
+        "stock": 5,
+        "imagen": "img/pizzapeperoni.jpg"
+    },
+    {
+        "id": 3,
+        "nombre": "hawaiana",
+        "categoria": "PIZZAS",
+        "precio": 200.00,
+        "stock": 5,
+        "imagen": "img/pizzahawaiana.jpg"
+    },
+    {
+        "id": 4,
+        "nombre": "cuatro quesos",
+        "categoria": "PIZZAS",
+        "precio": 220.00,
+        "stock": 5,
+        "imagen": "img/pizzacuatroquesos.jpg"
+    },
+    {
+        "id": 5,
+        "nombre": "imperial suprema",
+        "categoria": "PIZZAS",
+        "precio": 240.00,
+        "stock": 5,
+        "imagen": "img/pizzaimperialsuprema.jpg"
+    },
+    {
+        "id": 6,
+        "nombre": "pan de ajo",
+        "categoria": "ENTRADAS",
+        "precio": 65.00,
+        "stock": 5,
+        "imagen": "img/pandeajo.jpg"
+    },
+    {
+        "id": 7,
+        "nombre": "alitas",
+        "categoria": "ENTRADAS",
+        "precio": 130.00,
+        "stock": 5,
+        "imagen": "img/alitas.jpg"
+    },
+    {
+        "id": 8,
+        "nombre": "palitos de queso",
+        "categoria": "ENTRADAS",
+        "precio": 85.00,
+        "stock": 5,
+        "imagen": "img/palitosdequeso.jpg"
+    },
+    {
+        "id": 9,
+        "nombre": "ensalada cesar",
+        "categoria": "ENTRADAS",
+        "precio": 95.00,
+        "stock": 5,
+        "imagen": "img/ensaladacesar.jpg"
+    },
+    {
+        "id": 10,
+        "nombre": "calzone",
+        "categoria": "ENTRADAS",
+        "precio": 150.00,
+        "stock": 5,
+        "imagen": "img/calzone.jpg"
+    },
+    {
+        "id": 11,
+        "nombre": "pizza de nutella",
+        "categoria": "POSTRES Y BEBIDAS",
+        "precio": 150.00,
+        "stock": 5,
+        "imagen": "img/pizzadenutella.jpg"
+    },
+    {
+        "id": 12,
+        "nombre": "tiramisu",
+        "categoria": "POSTRES Y BEBIDAS",
+        "precio": 80.00,
+        "stock": 5,
+        "imagen": "img/tiramisu.jpg"
+    },
+    {
+        "id": 13,
+        "nombre": "refresco 2lt",
+        "categoria": "POSTRES Y BEBIDAS",
+        "precio": 55.00,
+        "stock": 5,
+        "imagen": "img/refresco2lt.jpg"
+    },
+    {
+        "id": 14,
+        "nombre": "limonada",
+        "categoria": "POSTRES Y BEBIDAS",
+        "precio": 40.00,
+        "stock": 5,
+        "imagen": "img/limonada.jpg"
+    },
+    {
+        "id": 15,
+        "nombre": "soda italiana",
+        "categoria": "POSTRES Y BEBIDAS",
+        "precio": 50.00,
+        "stock": 5,
+        "imagen": "img/sodaitaliana.jpg"
+    }
+]

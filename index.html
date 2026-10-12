@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - [Nombre de tu Negocio]</title>
+
+    <!-- Archivos comentados para habilitar después -->
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <!-- <link rel="icon" href="icons/icon.svg"> -->
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <!-- Leaflet comentado -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
+</head>
+
+<body>
+
+    <!-- App Shell: Encabezado -->
+    <header class="app-header">
+        <!-- Reemplaza src con tu logo si tienes, o deja el texto -->
+        <img src="img/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+        <h1>[Nombre de tu Negocio]</h1>
+    </header>
+
+    <!-- App Shell: Zona del catálogo -->
+    <main id="zona-catalogo" class="catalogo-grid">
+        <!-- csr.js inyectará los productos aquí -->
+    </main>
+
+    <!-- App Shell: Pie de página -->
+    <footer class="app-footer">
+        <p>&copy; 2026 [Nombre de tu Negocio]. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts comentados para habilitar después -->
+    <!-- <script src="js/carrito.js"></script> -->
+    <!-- <script src="js/notificaciones.js"></script> -->
+    <!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> -->
+    <!-- <script src="js/geolocalizacion.js"></script> -->
+    <!-- <script src="js/app.js"></script> -->
+
+    <!-- Script CSR para cargar el catálogo -->
+    <script src="js/csr.js"></script>
+
+    <!-- Registro de Service Worker comentado -->
+    <!-- 
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script> 
+    -->
+</body>
+
+</html>
