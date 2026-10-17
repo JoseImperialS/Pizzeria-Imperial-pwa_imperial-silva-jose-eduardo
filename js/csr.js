@@ -12,40 +12,50 @@ function cargarCatalogo() {
         })
         .then(productos => {
             const contenedor = document.getElementById('zona-catalogo');
+            if (!contenedor) return;
+
             let htmlContent = '';
 
-            // Obtener las categorías únicas
             const categorias = [...new Set(productos.map(p => p.categoria))];
 
             categorias.forEach(categoria => {
-                // Agregar el título de la categoría
-                htmlContent += `<h2 class="titulo-categoria">${categoria}</h2>`;
-                htmlContent += `<div class="catalogo-grid">`; // Iniciar el grid de esta categoría
+                htmlContent += `<h2 class="titulo-categoria">${categoria.toUpperCase()}</h2>`;
+                htmlContent += `<div class="catalogo-grid">`;
 
-                // Filtrar y agregar solo los productos de esta categoría
                 const productosCategoria = productos.filter(p => p.categoria === categoria);
 
                 productosCategoria.forEach(producto => {
+                    // AQUÍ ESTÁ LA MAGIA: Adaptamos el nombre al formato de tus archivos
+                    let nombreImagen = producto.nombre.toLowerCase().replace(/ /g, '');
+                    if (categoria === "PIZZAS") {
+                        nombreImagen = "pizza" + nombreImagen;
+                    }
+
                     htmlContent += `
-                        <article class="producto-card">
-                            <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-img">
-                            <h3 class="producto-nombre">${producto.nombre}</h3>
-                            <p class="producto-precio">$${producto.precio.toFixed(2)}</p>
-                            <button class="btn-agregar" onclick="agregar(${producto.id})">Agregar</button>
-                        </article>
+                        <div class="producto-card card">
+                            <img src="img/${nombreImagen}.jpg" alt="${producto.nombre}" style="width:100%; border-radius: 8px; margin-bottom: 10px;" onerror="this.src='img/logo.jpg'">
+                            <h3>${producto.nombre}</h3>
+                            <p class="precio">Precio: $${producto.precio}</p>
+                            <button class="btn-agregar" onclick='agregarConAviso(${JSON.stringify(producto)})'>
+                                Agregar al carrito
+                            </button>
+                        </div>
                     `;
                 });
 
-                htmlContent += `</div>`; // Cerrar el grid
+                htmlContent += `</div>`;
             });
 
-            // En index.html, quitaremos la clase catalogo-grid del main para que no se empalme
             contenedor.innerHTML = htmlContent;
-            contenedor.classList.remove('catalogo-grid');
         })
-        .catch(error => console.error("Hubo un problema con la petición Fetch:", error));
+        .catch(error => console.error("Hubo un problema con el catálogo:", error));
 }
 
-function agregar(id) {
-    console.log(`Producto ${id} agregado (Función en desarrollo)`);
+function agregarConAviso(producto) {
+    if (typeof agregarAlCarrito === "function") {
+        agregarAlCarrito(producto);
+        alert(`¡${producto.nombre} se agregó a tu carrito! 🍕`);
+    } else {
+        console.error("Falta la función agregarAlCarrito.");
+    }
 }
