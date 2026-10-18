@@ -3,16 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo SSR - Pizzería Imperial</title>
 </head>
 
 <body>
     <h1>Catálogo de Pizzería Imperial (SSR)</h1>
-    <ul>
-        {% for p in productos %}
-        <li><strong>{{ p.nombre }}</strong> - Categoria: {{ p.categoria }} - ${{ p.precio }}</li>
-        {% endfor %}
-    </ul>
+
+    {% regroup productos by categoria as categorias %}
+
+    {% for categoria in categorias %}
+    <section>
+        <h2>{{ categoria.grouper }}</h2>
+
+        <ul>
+            {% for p in categoria.list %}
+            <li>
+                <strong>{{ p.nombre }}</strong>
+                - Precio: ${{ p.precio }}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endfor %}
+
 </body>
 
 </html>

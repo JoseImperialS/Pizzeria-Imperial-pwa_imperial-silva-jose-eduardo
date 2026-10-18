@@ -32,18 +32,26 @@ function cargarCatalogo() {
                     }
 
                     htmlContent += `
-                        <div class="producto-card card">
-                            <img src="img/${nombreImagen}.jpg" alt="${producto.nombre}" style="width:100%; border-radius: 8px; margin-bottom: 10px;" onerror="this.src='img/logo.jpg'">
-                            <h3>${producto.nombre}</h3>
-                            <p class="precio">Precio: $${producto.precio}</p>
-                            <button class="btn-agregar" onclick='agregarConAviso(${JSON.stringify(producto)})'>
-                                Agregar al carrito
-                            </button>
-                        </div>
-                    `;
+    <div class="producto-card card">
+        <img src="img/${nombreImagen}.jpg"
+             alt="${producto.nombre}"
+             style="width:100%; border-radius: 8px; margin-bottom: 10px;"
+             onerror="this.src='img/logo.jpg'">
+
+        <h3>${producto.nombre}</h3>
+        <p class="precio">Precio: $${producto.precio}</p>
+
+        <button class="btn-agregar"
+            onclick='agregarAlCarrito(${JSON.stringify(producto)})'>
+            Agregar al carrito
+        </button>
+    </div>
+`;
+
+
                 });
 
-                htmlContent += `</div>`;
+                htmlContent += `</div > `;
             });
 
             contenedor.innerHTML = htmlContent;
