@@ -17,8 +17,6 @@
     <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
 </head>
 
-<script src="js/csr.js"></script>
-<script src="js/carrito.js"></script>
 
 <body>
 
@@ -33,6 +31,13 @@
     <main id="zona-catalogo">
         <!-- csr.js inyectará los productos aquí -->
     </main>
+    <!-- App Shell: Carrito (carrito.js lo llena con lo guardado en localStorage) -->
+    <section id="carrito" class="card" style="max-width: 900px; margin: 2rem auto; padding: 1rem;">
+        <h2>Tu pedido</h2>
+        <div id="lista-carrito"></div>
+        <p><strong>Total: <span id="total-carrito">$0</span></strong></p>
+    </section>
+
 
     <!-- App Shell: Pie de página -->
     <footer class="app-footer">
@@ -40,14 +45,14 @@
     </footer>
 
     <!-- Scripts comentados para habilitar después -->
-    <!-- <script src="js/carrito.js"></script> -->
+    <script src="js/carrito.js"></script>
+    <script src="js/csr.js"></script>
     <!-- <script src="js/notificaciones.js"></script> -->
     <!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> -->
     <!-- <script src="js/geolocalizacion.js"></script> -->
     <!-- <script src="js/app.js"></script> -->
 
-    <!-- Script CSR para cargar el catálogo -->
-    <script src="js/csr.js"></script>
+
 
     <!-- Registro de Service Worker comentado -->
     <!-- 
