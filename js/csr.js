@@ -51,11 +51,4 @@ function cargarCatalogo() {
         .catch(error => console.error("Hubo un problema con el catálogo:", error));
 }
 
-function agregarConAviso(producto) {
-    if (typeof agregarAlCarrito === "function") {
-        agregarAlCarrito(producto);
-        alert(`¡${producto.nombre} se agregó a tu carrito! 🍕`);
-    } else {
-        console.error("Falta la función agregarAlCarrito.");
-    }
-}
+
