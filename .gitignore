@@ -1,0 +1,9 @@
+# Entorno virtual
+servidor-ssr/venv/
+
+# Base de datos local
+servidor-ssr/db.sqlite3
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
