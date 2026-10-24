@@ -142,3 +142,202 @@ body {
     margin-top: auto;
     font-size: 0.9rem;
 }
+
+/* ===== Avance 3: filtros, carrito, estado de conexión y mapa ===== */
+
+/* Asegura que el atributo hidden siempre oculte (filtros y mapa) */
+[hidden] {
+    display: none !important;
+}
+
+/* Indicador conectado / sin conexión (app.js le cambia el texto y la clase) */
+.pill {
+    margin-left: auto;
+    padding: .2rem .7rem;
+    border-radius: 999px;
+    background: #2e7d32;
+    color: #fff;
+    font-size: .85rem;
+}
+
+.pill.offline {
+    background: #6d4c41;
+}
+
+/* Botones de categoría (csr.js los crea encima del catálogo) */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: .75rem;
+}
+
+.filtros button {
+    background: white;
+    color: #b71c1c;
+    border: 1px solid #b71c1c;
+}
+
+.filtros button[aria-pressed="true"] {
+    background: #b71c1c;
+    color: white;
+}
+
+/* Carrito: una fila por producto con nombre, cantidad, precio y quitar */
+#carrito-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+}
+
+#carrito-lista li {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.carrito-nombre {
+    flex: 1;
+}
+
+.carrito-cantidad {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.carrito-precio {
+    min-width: 4rem;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Mensajes y mapa */
+.mensaje {
+    min-height: 1.4em;
+}
+
+.mapa {
+    height: 320px;
+    border-radius: 8px;
+    margin-top: .75rem;
+}
+
+/* ===== Ajuste de diseño con la estructura de la guía ===== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Contenido principal centrado, con aire a los lados */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+main section {
+    margin-bottom: 2rem;
+}
+
+/* Catálogo en cuadrícula de tarjetas */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.producto {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: .75rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .08);
+}
+
+/* Foto con tamaño fijo: ya no ocupa toda la pantalla */
+.producto__foto {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+}
+
+.producto .precio {
+    color: #b71c1c;
+    font-weight: bold;
+}
+
+.producto p {
+    margin: 0;
+    color: #555;
+}
+
+.producto button {
+    margin-top: auto;
+}
+
+/* Botones con el color de tu marca */
+main button {
+    background: #b71c1c;
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: .5rem .9rem;
+    cursor: pointer;
+    font: inherit;
+}
+
+main button:hover {
+    background: #8e1515;
+}
+
+main button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* Los filtros conservan su estilo de contorno (van después y ganan) */
+main .filtros button {
+    background: #fff;
+    color: #b71c1c;
+    border: 1px solid #b71c1c;
+}
+
+main .filtros button[aria-pressed="true"] {
+    background: #b71c1c;
+    color: #fff;
+}
+
+/* Los botones + / − del carrito, pequeños y redondos */
+.carrito-cantidad button {
+    width: 1.8rem;
+    height: 1.8rem;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.carrito-quitar {
+    background: #6d4c41;
+}
+
+/* Mapa de la ruta */
+.mapa {
+    width: 100%;
+    height: 320px;
+    border-radius: 8px;
+    margin-top: .75rem;
+}

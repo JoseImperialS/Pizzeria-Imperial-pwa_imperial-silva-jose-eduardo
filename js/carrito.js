@@ -1,83 +1,103 @@
-// Cargar el carrito desde localStorage
-let carrito = JSON.parse(localStorage.getItem('carrito_pizzeria_imperial')) || [];
+// carrito.js — Almacenamiento local y "sincronización" offline/online
+// localStorage es una caja de guardado que vive DENTRO del navegador
+// y sobrevive aunque cierres la pestaña o se vaya el internet.
 
-// Guardar en localStorage y actualizar la vista
-function guardarCarrito() {
-    localStorage.setItem('carrito_pizzeria_imperial', JSON.stringify(carrito));
-    renderizarCarrito();
+const CLAVE_CARRITO = "pizzeria-imperial-carrito";
+
+// Lee el carrito guardado en localStorage (si no hay nada, regresa un array vacío)
+function leerCarrito() {
+    const guardado = localStorage.getItem(CLAVE_CARRITO);
+    return guardado ? JSON.parse(guardado) : [];
 }
 
-// 1. Agregar producto
+// Guarda el array del carrito en localStorage (JSON.stringify lo convierte a texto)
+function guardarCarrito(carrito) {
+    localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
+}
+
+// Agrega un producto al carrito (o le sube la cantidad si ya estaba)
 function agregarAlCarrito(producto) {
-    const existe = carrito.find(p => p.id === producto.id);
-    if (existe) {
-        existe.cantidad += 1;
+    const carrito = leerCarrito();
+    const existente = carrito.find((item) => item.id === producto.id);
+
+    if (existente) {
+        existente.cantidad += 1;
     } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 });
     }
-    guardarCarrito();
+
+    guardarCarrito(carrito);
+    pintarCarrito();
 }
 
-// 2. Sumar o Restar cantidad
-function cambiarCantidad(id, cambio) {
-    const item = carrito.find(p => p.id === id);
-    if (item) {
-        item.cantidad += cambio;
-        if (item.cantidad <= 0) {
-            quitarDelCarrito(id);
-            return;
-        }
-    }
-    guardarCarrito();
+// Sube o baja la cantidad con los botones +/-; si llega a 0, el producto se quita solo.
+function cambiarCantidad(id, delta) {
+    const carrito = leerCarrito();
+    const item = carrito.find((item) => item.id === id);
+    if (!item) return;
+
+    item.cantidad += delta;
+    const actualizado = item.cantidad <= 0 ? carrito.filter((item) => item.id !== id) : carrito;
+
+    guardarCarrito(actualizado);
+    pintarCarrito();
 }
 
-// 3. Quitar producto
+// Quita un producto del carrito sin importar su cantidad
 function quitarDelCarrito(id) {
-    carrito = carrito.filter(p => p.id !== id);
-    guardarCarrito();
+    const carrito = leerCarrito().filter((item) => item.id !== id);
+    guardarCarrito(carrito);
+    pintarCarrito();
 }
 
-// 4. Calcular Total
-function obtenerTotal() {
-    return carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+// Dibuja el carrito en pantalla a partir de lo que hay en localStorage.
+function pintarCarrito() {
+    const carrito = leerCarrito();
+    const lista = document.getElementById("carrito-lista");
+    const total = document.getElementById("carrito-total");
+
+    lista.innerHTML = "";
+    let suma = 0;
+
+    carrito.forEach((item) => {
+        const subtotal = item.precio * item.cantidad;
+        suma += subtotal;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+      <span class="carrito-nombre">${item.nombre}</span>
+      <span class="carrito-cantidad">
+        <button type="button" data-accion="restar" data-id="${item.id}" aria-label="Quitar una unidad de ${item.nombre}">−</button>
+        <span class="carrito-cantidad__valor">${item.cantidad}</span>
+        <button type="button" data-accion="sumar" data-id="${item.id}" aria-label="Agregar una unidad de ${item.nombre}">+</button>
+      </span>
+      <span class="carrito-precio">$${subtotal}</span>
+      <button type="button" class="carrito-quitar" data-accion="quitar" data-id="${item.id}">Quitar</button>
+    `;
+        lista.appendChild(li);
+    });
+
+    total.textContent = suma;
 }
 
-// Renderizar en el HTML
-function renderizarCarrito() {
-    const contenedor = document.getElementById('lista-carrito');
-    const totalElemento = document.getElementById('total-carrito');
-    if (!contenedor) return;
+// Un solo listener en <ul id="carrito-lista"> atiende los clics de TODOS los
+// botones +/-/Quitar (delegación de eventos), incluso los creados después.
+function manejarClicCarrito(evento) {
+    const boton = evento.target.closest("button[data-accion]");
+    if (!boton) return;
 
-    contenedor.innerHTML = '';
-
-    if (carrito.length === 0) {
-        contenedor.innerHTML = '<p>El carrito está vacío.</p>';
-    } else {
-        carrito.forEach(item => {
-            contenedor.innerHTML += `
-        <div class="item-carrito" style="margin-bottom: 8px;">
-          <span><strong>${item.nombre}</strong> (x${item.cantidad}) - $${item.precio * item.cantidad}</span>
-          <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
-          <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
-          <button onclick="quitarDelCarrito(${item.id})">❌</button>
-        </div>
-      `;
-        });
-    }
-
-    if (totalElemento) {
-        totalElemento.textContent = `$${obtenerTotal()}`;
-    }
+    const id = Number(boton.dataset.id);
+    if (boton.dataset.accion === "sumar") cambiarCantidad(id, 1);
+    if (boton.dataset.accion === "restar") cambiarCantidad(id, -1);
+    if (boton.dataset.accion === "quitar") quitarDelCarrito(id);
 }
 
-// Renderizar apenas cargue la página
-document.addEventListener('DOMContentLoaded', renderizarCarrito);
-
+// "Sincronizar": en una app real haría un fetch() con method: "POST" al servidor.
+// Aquí lo simulamos para enseñar el patrón offline -> online.
 function sincronizarCarrito() {
     const mensaje = document.getElementById("carrito-mensaje");
 
     if (!navigator.onLine) {
-        // navigator.onLine: propiedad del navegador que dice si hay conexión
         mensaje.textContent = "Sin conexión: el carrito se sincronizará cuando vuelva el internet.";
         return;
     }
@@ -86,13 +106,14 @@ function sincronizarCarrito() {
     mensaje.textContent = "Carrito sincronizado con el servidor (simulado). ✓";
 }
 
-// Conectar el botón y los eventos de conexión (paso 14)
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('btn-sincronizar').addEventListener('click', sincronizarCarrito);
+document.addEventListener("DOMContentLoaded", () => {
+    pintarCarrito();
+    document.getElementById("carrito-lista").addEventListener("click", manejarClicCarrito);
+    document.getElementById("btn-sincronizar").addEventListener("click", sincronizarCarrito);
 
-    // Estos dos eventos del navegador avisan cuando regresa o se pierde la conexión
-    window.addEventListener('online', sincronizarCarrito);
-    window.addEventListener('offline', () => {
-        document.getElementById('carrito-mensaje').textContent = 'Se perdió la conexión.';
+    // Estos dos eventos del navegador avisan cuando se pierde o regresa la conexión
+    window.addEventListener("online", sincronizarCarrito);
+    window.addEventListener("offline", () => {
+        document.getElementById("carrito-mensaje").textContent = "Se perdió la conexión.";
     });
 });
