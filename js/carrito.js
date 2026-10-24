@@ -72,3 +72,27 @@ function renderizarCarrito() {
 
 // Renderizar apenas cargue la página
 document.addEventListener('DOMContentLoaded', renderizarCarrito);
+
+function sincronizarCarrito() {
+    const mensaje = document.getElementById("carrito-mensaje");
+
+    if (!navigator.onLine) {
+        // navigator.onLine: propiedad del navegador que dice si hay conexión
+        mensaje.textContent = "Sin conexión: el carrito se sincronizará cuando vuelva el internet.";
+        return;
+    }
+
+    // Aquí iría: fetch("https://mi-api.com/carrito", { method: "POST", body: ... })
+    mensaje.textContent = "Carrito sincronizado con el servidor (simulado). ✓";
+}
+
+// Conectar el botón y los eventos de conexión (paso 14)
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-sincronizar').addEventListener('click', sincronizarCarrito);
+
+    // Estos dos eventos del navegador avisan cuando regresa o se pierde la conexión
+    window.addEventListener('online', sincronizarCarrito);
+    window.addEventListener('offline', () => {
+        document.getElementById('carrito-mensaje').textContent = 'Se perdió la conexión.';
+    });
+});
