@@ -28,6 +28,14 @@ function agregarAlCarrito(producto) {
 
     guardarCarrito(carrito);
     pintarCarrito();
+    avisarConNotificacion("Pedido agregado", `${producto.nombre} se agregó a tu carrito 🍕`);
+}
+
+// Muestra una notificación del sistema SOLO si el usuario ya dio permiso
+// (el permiso se pide con el botón "Activar notificaciones" de notificaciones.js)
+function avisarConNotificacion(titulo, cuerpo) {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    new Notification(titulo, { body: cuerpo, icon: "icons/icon-192.png" });
 }
 
 // Sube o baja la cantidad con los botones +/-; si llega a 0, el producto se quita solo.
@@ -96,14 +104,22 @@ function manejarClicCarrito(evento) {
 // Aquí lo simulamos para enseñar el patrón offline -> online.
 function sincronizarCarrito() {
     const mensaje = document.getElementById("carrito-mensaje");
+    const carrito = leerCarrito();
 
     if (!navigator.onLine) {
-        mensaje.textContent = "Sin conexión: el carrito se sincronizará cuando vuelva el internet.";
+        mensaje.textContent = "Sin conexión: tu carrito está guardado y se enviará cuando vuelva el internet.";
         return;
     }
 
-    // Aquí iría: fetch("https://mi-api.com/carrito", { method: "POST", body: ... })
-    mensaje.textContent = "Carrito sincronizado con el servidor (simulado). ✓";
+    if (carrito.length === 0) {
+        mensaje.textContent = "Conectado. Tu carrito está vacío, no hay nada que enviar.";
+        return;
+    }
+
+    // Aquí iría: fetch("https://mi-api.com/carrito", { method: "POST", body: JSON.stringify(carrito) })
+    const piezas = carrito.reduce((total, item) => total + item.cantidad, 0);
+    mensaje.textContent = `Carrito sincronizado con el servidor (simulado): ${piezas} producto(s) enviados. ✓`;
+    avisarConNotificacion("Carrito sincronizado", `Volvió la conexión y se enviaron ${piezas} producto(s) de tu pedido.`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -114,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Estos dos eventos del navegador avisan cuando se pierde o regresa la conexión
     window.addEventListener("online", sincronizarCarrito);
     window.addEventListener("offline", () => {
-        document.getElementById("carrito-mensaje").textContent = "Se perdió la conexión.";
+        document.getElementById("carrito-mensaje").textContent =
+            "Se perdió la conexión. Puedes seguir armando tu pedido; se enviará al reconectar.";
     });
 });
