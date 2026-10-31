@@ -13,7 +13,7 @@
 |---|---|---|
 | 1 | `a569dae` | 11/10/2026 |
 | 2 | `56a557d` | 16/10/2026 |
-| 3 | (hash del avance 3) | 25/10/2026 |
+| 3 | `028c0ce` | 25/10/2026 |
 | 4 | Se registra en el reporte PDF | 01/11/2026 |
 
 ## Comparación SSR vs CSR
