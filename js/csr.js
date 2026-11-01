@@ -14,13 +14,16 @@ fetch("catalogo.json")
         contenedorCatalogo.removeAttribute("aria-busy");
         contenedorCatalogo.removeAttribute("aria-label");
 
-        productos.forEach((producto) => {
+        productos.forEach((producto, indice) => {
             const tarjeta = document.createElement("div");
             tarjeta.className = "producto";
             tarjeta.dataset.categoria = producto.categoria; // queda como data-categoria="..."
 
+            // la primera foto es la que se ve al abrir: se pide de inmediato, las demás al hacer scroll
+            const carga = indice === 0 ? 'fetchpriority="high"' : 'loading="lazy"';
+
             tarjeta.innerHTML = `
-        <img class="producto__foto" src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
+        <img class="producto__foto" src="${producto.imagen}" alt="${producto.nombre}" width="800" height="600" ${carga}>
         <strong>${producto.nombre}</strong>
         <span class="precio">$${producto.precio}</span>
         <p>Stock: ${producto.stock}</p>

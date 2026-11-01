@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="css/estilos.css">
 
     <!-- Leaflet: librería de mapas gratuita (sin API key) para dibujar la ruta a la sucursal -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" media="print"
+        onload="this.media='all'">
+
+    <!-- La foto del primer producto es lo más grande al abrir: se adelanta su descarga -->
+    <link rel="preload" as="image" href="img/pizzamargarita.jpg" fetchpriority="high">
 </head>
 
 <body>
@@ -76,7 +80,7 @@
     <script src="js/carrito.js"></script>
     <script src="js/csr.js"></script>
     <script src="js/notificaciones.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
     <script src="js/geolocalizacion.js"></script>
     <script src="js/app.js"></script>
 
