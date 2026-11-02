@@ -20,7 +20,8 @@
             {% for p in categoria.list %}
             <li>
                 <strong>{{ p.nombre }}</strong>
-                - Precio: ${{ p.precio }}
+                - Precio: <span class="precio">${{ p.precio }}</span>
+                - Stock: {{ p.stock }}
             </li>
             {% endfor %}
         </ul>

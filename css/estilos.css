@@ -254,7 +254,10 @@ main section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1rem;
-    /* Reserva espacio antes de que csr.js dibuje las tarjetas: evita el salto de diseño (CLS) */
+}
+
+/* Reserva espacio antes de que csr.js dibuje las tarjetas: evita el salto de diseño (CLS) */
+.grid[aria-busy="true"] {
     min-height: 100vh;
 }
 
